@@ -18,6 +18,10 @@
                         <div class="row" style="padding-top:2rem;">
                             <div class="text-center col">
                                 <h3>Palette</h3>
+                                You can either submit each color individually or as a list<br><code>572F4E, 573E69, 4B5F901</code>
+                                <br>
+                                <br>
+                                Leading hastags are optional.
                                 <h1>
                                     <span class="badge bg-dark">
                                         <input class="form-control" type="text" id="hexcode" placeholder="#hexcode">
@@ -38,6 +42,8 @@
                                 </div>
                                 <br>
                                 <button type="button" class="btn btn-outline-light btn-lg btn-block" style="cursor: pointer;" onclick="matcher()">Check Skin</button>
+                                <br>
+                                <h1 id="status"></h1>
                             </div>
                         </div>
                     </div>
