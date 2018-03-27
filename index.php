@@ -7,20 +7,20 @@
     <body>
         <?php include_once("components/navBarIcon.php"); ?>
         <main>
-            <div class="pageContent centerContent"> 
+            <div class="pageContent centerContent container-fluid"> 
                 <?php include_once("components/nav.php"); ?>
-                <div>
-                    <div class="logo text-center">
-                        <a href="#">
-                            <img src="img/logo.png" onclick="logo()" width="100%">
-                        </a>
-                    </div>
-                    <div class="logoCaption">
-                        <h1 class="text-center">
-                            <div>
-                                Start Mapping
-                            </div>
-                        </h1>
+                <div class="row align-items-center" style="height: 100%">
+                    <div class="col-8 offset-2">
+                        <div class="logoCaption text-center">
+                            <h1>Minecraft Skin Palette Checker</h1>
+                            This is a tool that can be used for checking Minecraft skins to make sure they meet palette requirements.
+                            <h3 class="text-center">
+                                <div>
+                                    URL
+                                    <input style="width: 100%; height: 100px;" class="form-control form-control-lg" type="text">
+                                </div>
+                            </h3>
+                        </div>
                     </div>
                 </div>
             </div>
