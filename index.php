@@ -5,29 +5,46 @@
         include_once("components/scripts.php");
     ?>
     <body>
-        <?php include_once("components/navBarIcon.php"); ?>
         <main>
             <div class="pageContent centerContent container-fluid"> 
-                <?php include_once("components/nav.php"); ?>
-                <div class="row align-items-center" style="height: 100%">
+                <div class="row align-items-center flexContentMobile" style="height: 100%;">
                     <div class="col-8 offset-2">
-                        <div class="logoCaption text-center">
-                            <h1>Minecraft Skin Palette Checker</h1>
-                            This is a tool that can be used for checking Minecraft skins to make sure they meet palette requirements.
-                            <h3 class="text-center">
+                        <div class="logoCaption row">
+                            <div class="text-center col">
+                                <font size="10" class="writtenFont">Minecraft Skin Palette Checker</font>
+                                <h5>This is a tool that can be used for checking Minecraft skins<br>to make sure they meet palette requirements.<br><br>Use the following fields to input your data.</h5>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:2rem;">
+                            <div class="text-center col">
+                                <h3>Palette</h3>
+                                <h1>
+                                    <span class="badge bg-dark">
+                                        <input class="form-control" type="text" id="hexcode" placeholder="#hexcode">
+                                        <span style="cursor: pointer;" onclick="addColor()">+</span>
+                                    </span>
+                                </h1>
+                                <h1 id="colors">
+
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:2rem;">
+                            <div class="text-center col">
+                                <h3>URL</h3>
+                                Please make sure this is a direct URL to the file.
                                 <div>
-                                    URL
-                                    <input style="width: 100%; height: 100px;" class="form-control form-control-lg" type="text">
+                                    <input style="width: 100%; height: 4rem;" id="url" class="form-control form-control-lg" type="text">
                                 </div>
-                            </h3>
+                                <br>
+                                <button type="button" class="btn btn-outline-light btn-lg btn-block" style="cursor: pointer;" onclick="matcher()">Check Skin</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <?php include_once("components/granim.php"); ?>
         </main>
-        <?php include_once("components/sidebar.php"); ?>
     </body>
-
     <?php include_once("components/granim.php"); ?>
 </html>
