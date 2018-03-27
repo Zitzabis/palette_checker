@@ -43,6 +43,7 @@
                                 <button type="button" class="btn btn-outline-light btn-lg btn-block" style="cursor: pointer;" onclick="matcher()">Check Skin</button>
                                 <br>
                                 <h1 id="status"></h1>
+                                <a href="https://github.com/Zitzabis/palette_checker"><img src="img/github.png"></a>
                             </div>
                         </div>
                     </div>
