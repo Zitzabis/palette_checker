@@ -1,5 +1,5 @@
 <head>
-    <title>Page Title</title>
+    <title>Palette Checker</title>
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/sidebar.css">
