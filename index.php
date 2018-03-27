@@ -20,7 +20,6 @@
                                 <h3>Palette</h3>
                                 You can either submit each color individually or as a list<br><code>572F4E, 573E69, 4B5F901</code>
                                 <br>
-                                <br>
                                 Leading hastags are optional.
                                 <h1>
                                     <span class="badge bg-dark">
