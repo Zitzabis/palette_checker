@@ -1,71 +1,56 @@
-function logo() {
-    var relativeOffset = anime.timeline();
-    relativeOffset
-    .add({
-        targets: '.logoCaption',
-        translateY: '100',
-        easing: 'easeOutExpo',
-        duration: 500
-    })
-    .add({
-        targets: '.logo',
-        rotate: '180deg',
-        duration: 1000,
-        offset: '-=300' // Starts 600ms before the previous animation ends
-    })
-    .add({
-        targets: '.logo',
-        rotate: '0deg',
-        duration: 1000,
-        offset: '-=400' // Starts 600ms before the previous animation ends
-    })
-    .add({
-        targets: '.logoCaption',
-        translateY: '0',
-        duration: 500,
-        easing: 'easeOutExpo',
-        offset: '-=600', // Starts 600ms before the previous animation ends,
-        complete: function(anim) {
-            window.location.href = "home.php";
+// Global hexs
+var hexs = [];
+
+// Visually adds a new color and adds it to hexs array
+function addColor() {
+    var color = document.getElementById('hexcode').value;
+    colorArray = color.split(',');
+    for (i = 0; i < colorArray.length; ++i) {
+        color = colorArray[i].replace(/\s/g, '');; // Pulls hex and strips spaces
+
+        if (color.charAt(0) != '#') {
+            color = "#" + color;
         }
-    })
+
+        code = '<span class="badge" style="background-color: ' + color + ';">' + color + '</span> ';
+        content = document.getElementById('colors').innerHTML;
+        document.getElementById('colors').innerHTML = content + code;
+
+        hexs.push(color);
+    }
+    document.getElementById('hexcode').value = "";
 }
 
-function buttonInflate(inflate) {
-    var basicTimeline = anime.timeline();
-
-    if (inflate) {
-        basicTimeline
-        .add({
-            targets: '.continueButton',
-            scale: 1.5
-        })
-    }
-    else {
-        basicTimeline
-        .add({
-            targets: '.continueButton',
-            scale: 1
-        })
-    }
-}
-
-$(document).ready(function() {
-    function toggleSidebar() {
-        $(".button").toggleClass("active");
-        $("main").toggleClass("move-to-left");
-        $(".sidebar-item").toggleClass("active");
-    }
-
-    $(".button").on("click tap", function() {
-        toggleSidebar();
-    });
-
-    $(document).keyup(function(e) {
-        if (e.keyCode === 27) {
-            toggleSidebar();
+// Runs matching
+function matcher() {
+    // Build hexs array
+    jsonArray = '[ ';
+    for (i = 0; i < hexs.length; ++i) {
+        jsonArray += '"' + hexs[i] + '"';
+        if (i != hexs.length - 1) {
+            jsonArray += ', ';
         }
+    }
+    jsonArray += ' ]';
+    console.log(jsonArray);
+
+    // Extract URL
+    urlString = document.getElementById('url').value;
+    console.log(urlString);
+
+    // POST the data
+    $.ajax({
+        type: "POST",
+        url: 'http://api.zitzasoft.com/api/palette_matcher/match',
+        data: JSON.stringify({
+            Hexs:jsonArray,
+            URL:urlString
+        }),
+        dataType: 'json',
+        contentType: "application/json",
+        success: function(data)
+        {
+            console.log("Response: " + data["match"]);
+        } 
     });
-
-});
-
+}
