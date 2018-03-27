@@ -29,40 +29,16 @@ canvas { display:block; } /* To remove the scrollbars */
     justify-content: center;
 }
 
-.regularContent {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    padding-top: 5rem;
-}
-
-.logo {
-    display: block;
-    margin: auto;
-    width: 100%;
-}
-
-.panel {
-    padding: 2rem;
-    border: 5px solid rgb(255, 255, 255);
-    border-radius: 1rem;
-}
-
-.buttonClear {
-    color: white;
-    border: 5px solid rgb(255, 255, 255);
+.whiteOutline {
+    border: 1px solid;
     border-color: white;
-}
-
-.sidebar-anchor {
-    color: white !important;
-    text-decoration: none !important; /* no underline */
+    border-width: 2px;
 }
 
 @media only screen and (max-width: 600px) {
     .flexContentMobile {
-        margin-top: 5rem;
-        margin-bottom: 10rem;
+        margin-top: 2rem;
+        margin-bottom: 5rem;
     }
     .centerContent {
         overflow-y: scroll;
