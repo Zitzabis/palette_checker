@@ -15,7 +15,7 @@ function addColor() {
             hexs.push(color.substring(1));
         }
 
-        code = '<span class="badge" style="background-color: ' + color + ';">' + color + '</span> ';
+        code = '<span class="badge whiteOutline" style="background-color: ' + color + ';">' + color + '</span> ';
         content = document.getElementById('colors').innerHTML;
         document.getElementById('colors').innerHTML = content + code;
     }
@@ -41,9 +41,9 @@ function matcher() {
         {
             console.log("Response: " + data["match"]);
             if (data["match"])
-                document.getElementById('status').innerHTML = '<span class="badge bg-success">The skin matches the palette!</span>';
+                document.getElementById('status').innerHTML = '<span class="badge bg-success whiteOutline">The skin matches the palette!</span>';
             else
-                document.getElementById('status').innerHTML = '<span class="badge bg-danger">The skin does not match the palette.</span>';
+                document.getElementById('status').innerHTML = '<span class="badge bg-danger whiteOutline">The skin does not match the palette.</span>';
         } 
     });
 }
