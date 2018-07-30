@@ -27,10 +27,14 @@
                                     <span class="badge bg-dark">
                                         <input class="form-control" type="text" id="hexcode" placeholder="#hexcode">
                                         <span style="cursor: pointer;" onclick="addColor()">+</span>
+                                        <br>
+                                        <div id="invalid">
+                                            <!-- Invalid message inserted here via JS -->
+                                        </div>
                                     </span>
                                 </h1>
                                 <h1 id="colors">
-
+                                    <!-- Color badges inserted here via JS -->
                                 </h1>
                             </div>
                         </div>

@@ -20,6 +20,11 @@ function addColor() {
             code = '<span class="badge whiteOutline" style="background-color: ' + color + ';">' + color + '</span> ';
             content = document.getElementById('colors').innerHTML;
             document.getElementById('colors').innerHTML = content + code;
+            document.getElementById('invalid').innerHTML = "";
+        }
+        else {
+            code = '<span class="badge badge-danger">Invalid hexcode.</span>';
+            document.getElementById('invalid').innerHTML = code;
         }
     }
     document.getElementById('hexcode').value = "";
