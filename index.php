@@ -18,7 +18,9 @@
                         <div class="row" style="padding-top:2rem;">
                             <div class="text-center col">
                                 <h3>Palette</h3>
-                                You can either submit each color individually or as a list<br><code>572F4E, 573E69, 4B5F901</code>
+                                You can either submit each color individually or as a list
+                                <br>
+                                <code>572F4E, 573E69, 4B5F90</code>
                                 <br>
                                 Leading hastags are optional.
                                 <h1>
