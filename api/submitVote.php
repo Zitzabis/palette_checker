@@ -29,8 +29,7 @@
         }
     }
 
-    include_once("classes/Database.php");
-    $db = new Database("localhost", "root", "3DPr1ntPalace!!C");
+    include_once("scripts/dbStartup.php");
 
     if (!isset($_SESSION['votes'])) {
         echo "<h1>Unauthorized use of this endpoint.</h1>";

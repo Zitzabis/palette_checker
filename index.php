@@ -2,8 +2,7 @@
     // error_reporting(E_ALL);
     // ini_set('display_errors', 1);
 
-    include_once("classes/Database.php");
-    $db = new Database("localhost", "root", "3DPr1ntPalace!!C");
+    include_once("scripts/dbStartup.php");
 
     session_start();
     $_SESSION['auth'] = true;

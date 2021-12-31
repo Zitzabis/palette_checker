@@ -56,8 +56,7 @@
         }
     }
 
-    include_once("../classes/Database.php");
-    $db = new Database("localhost", "root", "3DPr1ntPalace!!C");
+    include_once("../scripts/dbStartup.php");
 
     if ( isset($_REQUEST['inputPollKeyCreate']) ) {
         if ( $_REQUEST['inputPollKey'] != '' ) {
