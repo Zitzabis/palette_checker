@@ -26,7 +26,8 @@
                                 <br><br>
                                 <h1>Instructions:</h1>
                                 <h5>
-                                    Use the below section to upload and submit a skin to be used in a poll.
+                                    Use the below section to upload and submit a skin to be used in a poll.<br>
+                                    Skin names and profile names will be automatically extracted and displayed based on the URLs you provide below.
                                     <br><br>
                                     If you were provided a poll key, please enter it in the "Poll Key" field.
                                 </h5>
@@ -38,14 +39,36 @@
                                 
                                     <div class="text-center col">
                                         <div class="form-group">
-                                            <label for="inputUsername">PMC Username</label>
-                                            <input type="text" class="form-control" name="inputUsername" id="inputUsername" aria-describedby="inputUsername" placeholder="Enter username">
+                                            <label for="inputUsername">PMC Profile</label>
+                                            <input type="text" class="form-control" name="inputUsername" id="inputUsername" aria-describedby="inputUsername" placeholder="Paste link/URL for your PMC profile" onchange="validateProfileURL()">
                                             <small id="inputUsername" class="form-text text-muted">This will be hidden until the poll ends.</small>
+                                            <script>
+                                                function validateProfileURL() {
+                                                    let url = document.getElementById("inputUsername").value;
+                                                    
+                                                    try {
+                                                        url = new URL(url);
+                                                    } catch (_) {
+                                                        document.getElementById("inputUsername").value = ""; 
+                                                    }
+                                                }
+                                            </script>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputSkinName">Skin Name</label>
-                                            <input type="text" class="form-control" name="inputSkinName" id="inputSkinName" aria-describedby="inputSkinName" placeholder="Enter skin name">
-                                            <small id="inputSkinName" class="form-text text-muted">This will be publically displayed. Please use the same name as you intend to use on PMC.</small>
+                                            <label for="inputSkinName">Skin Link</label>
+                                            <input type="text" class="form-control" name="inputSkinName" id="inputSkinName" aria-describedby="inputSkinName" placeholder="Paste link/URL for your skin on PMC" onchange="validateSkinURL()">
+                                            <small id="inputSkinName" class="form-text text-muted">This will be publically displayed.</small>
+                                            <script>
+                                                function validateSkinURL() {
+                                                    let url = document.getElementById("inputSkinName").value;
+                                                    
+                                                    try {
+                                                        url = new URL(url);
+                                                    } catch (_) {
+                                                        document.getElementById("inputSkinName").value = ""; 
+                                                    }
+                                                }
+                                            </script>
                                         </div>
                                         <div class="form-group">
                                             <label for="skinFile" class="form-label">Skin File Upload</label>
