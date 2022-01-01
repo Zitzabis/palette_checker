@@ -2,6 +2,7 @@
     // error_reporting(E_ALL);
     // ini_set('display_errors', 1);
 
+    include_once("scripts/init.php");
     include_once("scripts/dbStartup.php");
 
     session_start();

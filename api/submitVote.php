@@ -29,6 +29,7 @@
         }
     }
 
+    include_once("scripts/init.php");
     include_once("scripts/dbStartup.php");
 
     if (!isset($_SESSION['votes'])) {
