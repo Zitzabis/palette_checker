@@ -133,7 +133,7 @@
                                         $p = ($poll['poll_id'] * 42) / 32;
                                 ?>
                                     <a href="poll.php?p=<?php echo $p; ?>">
-                                        <span class="badge bg-dark">
+                                        <span class="badge bg-dark border" style='padding: 1rem; margin: 0.3rem'>
                                             <h2>
                                                 <?php
                                                     foreach ($skins as $key => $skin) {
@@ -146,7 +146,10 @@
                                                 ?>
                                             </h2>
                                             <h5 id="timer" style="color: lightgreen">
-                                                <?php echo $db->getPoll($poll['poll_id'])['end_date'] . " EST"; ?>
+                                                <?php
+                                                    $date = new DateTime($db->getPoll($poll['poll_id'])['end_date']);
+                                                    echo "Ended: " . $date->format('Y-m-d');
+                                                ?>
                                             </h5>
                                         </span>
                                     </a>
