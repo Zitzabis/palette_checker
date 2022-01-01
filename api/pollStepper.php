@@ -1,5 +1,5 @@
 <?php
-    include_once("../scripts/dbStartup.php");
+    include_once("./scripts/dbStartup.php");
 
     $activePolls = $db->getActivePolls();
     foreach ($activePolls as $key => $value) {
