@@ -52,6 +52,21 @@
             $stmt->execute();
         }
 
+        function endPoll($id) {
+            $query = "UPDATE pmc_voter.poll SET active=2 WHERE poll_id = ?";
+
+
+            if($stmt = $this->mysqli->prepare($query)) { // assuming $mysqli is the connection
+                $stmt->bind_param('i', $id);
+                $stmt->execute();
+                // any additional code you need would go here.
+            } else {
+                $error = $this->mysqli->errno . ' ' . $this->mysqli->error;
+                echo $error; // 1054 Unknown column 'foo' in 'field list'
+            }
+            
+        }
+
         #########
         # Skins
         #########
