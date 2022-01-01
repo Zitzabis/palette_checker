@@ -166,26 +166,62 @@ if (session_id() == ''){
                                         </div>
                                         <div class="row">
                                             <?php
+                                                $winner = null;
                                                 foreach ($skins as $key => $skin) {
                                                     $skin = $db->getSkin($skin['skin']);
+                                                    $votes = $db->getVotes($skin['skin_id'])['num_votes'];
+                                                    if ($winner == null) {
+                                                        $winner = $votes;
+                                                    }
+                                                    else {
+                                                        if ($winner < $votes) {
+                                                            $winner = $votes;
+                                                        }
+                                                    }
+                                                }
+                                                foreach ($skins as $key => $skin) {
+                                                    $skin = $db->getSkin($skin['skin']);
+                                                    $votes = $db->getVotes($skin['skin_id'])['num_votes'];
+                                                    
                                             ?>
-                                                    <div class="text-center col" style="margin:0.5rem;">
-                                                        <img
-                                                            style="padding:1rem; height:80%; width:60%"
-                                                            src="<?php echo $skin['path']; ?>"
-                                                            alt="Card image cap"
-                                                        >
-                                                
-                                                        <h4>
+                                                    <div class="text-center col bg-dark " style="margin:2rem; border-radius: 10px;">
+                                                        <h2 style="padding-top:2rem">
                                                             <?php
                                                                 echo $skin['name'];
                                                                 $p = ($pollID * 42) / 32;
                                                                 $s = ($skin['skin_id'] * 4) / 6;
                                                             ?>
-                                                            <br>
-                                                        </h4>
+                                                        </h2>
                                                         <?php
                                                             echo "Made by: " . $skin['author'];
+                                                        ?>
+                                                        <?php //include_once('components/skinPreviewImage.php'); ?>
+                                                        <br>
+                                                
+                                                        <div>
+                                                            <?php include('components/skinPreviewMini.php'); ?>
+                                                            <!-- <iframe id="3dpreview_mini" src="<?php echo "3dpreview_mini/index.php?img=" .  $skin['skin_id']; ?>" width="300px" height="300px"></iframe> -->
+                                                        </div>
+                                                    
+                                                        <input id="previewID<?php echo $skin['skin_id']; ?>" type=hidden value="<?php echo $skin['skin_id']; ?>">
+                                                        <a role="button" href="poll.php?p=<?php echo $p; ?>&prev=<?php echo $skin['skin_id']; ?>" class="badge btn-primary">
+                                                            3D Preview
+                                                        </a>
+                                                        <br><br>
+                                                        <h4>
+                                                            Votes: 
+                                                        </h4>
+                                                        <h2>
+                                                            <?php echo $votes; ?>
+                                                        </h2>
+                                                        <?php
+                                                            if ($votes == $winner) {
+                                                        ?>
+                                                            <h2 style="color: gold">
+                                                                Winner!
+                                                            </h2>
+                                                        <?php
+                                                            }
                                                         ?>
                                                     </div>
                                             <?php
