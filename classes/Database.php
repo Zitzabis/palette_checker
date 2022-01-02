@@ -28,6 +28,14 @@
             return $data[0];
         }
 
+        function getPolls() {
+            $sql = "SELECT p.* FROM pmc_voter.poll as p";
+
+            $result = $this->mysqli->query($sql);
+            for ($return = array (); $row = $result->fetch_assoc(); $return[] = $row);
+            return $return;
+        }
+
         function getActivePolls() {
             $sql = "SELECT p.poll_id, p.active, p.start_date, p.end_date FROM pmc_voter.poll as p WHERE p.active = 1";
 
