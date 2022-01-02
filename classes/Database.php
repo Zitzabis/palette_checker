@@ -60,12 +60,44 @@
             $stmt->execute();
         }
 
-        function insertToPollSlot($id, $url) {
-            $query = "INSERT INTO `poll_slots`(`poll`, `url`) VALUES (?, ?)";
+        function endPoll($id) {
+            $query = "UPDATE pmc_voter.poll SET active=2 WHERE poll_id = ?";
+
+            if($stmt = $this->mysqli->prepare($query)) { // assuming $mysqli is the connection
+                $stmt->bind_param('i', $id);
+                $stmt->execute();
+                // any additional code you need would go here.
+            } else {
+                $error = $this->mysqli->errno . ' ' . $this->mysqli->error;
+                echo $error; // 1054 Unknown column 'foo' in 'field list'
+            }
+        }
+
+        function getPollByKey($pollKey) {
+            $query = "SELECT * FROM pmc_voter.poll as p WHERE p.poll_key = ?";
 
             $stmt = $this->mysqli->prepare($query); 
-            $stmt->bind_param("is", $id, $url);
+            $stmt->bind_param("s", $pollKey);
             $stmt->execute();
+            $result = $stmt->get_result(); // get the mysqli result
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+            return $data[0];
+        }
+
+        #########
+        # Poll Slots
+        #########
+        function insertToPollSlot($id, $url) {
+            $query = "INSERT INTO pmc_voter.`poll_slots`(`poll`, `url`) VALUES (?, ?)";
+
+            if($stmt = $this->mysqli->prepare($query)) { // assuming $mysqli is the connection
+                $stmt->bind_param('is', $id, $url);
+                $stmt->execute();
+                // any additional code you need would go here.
+            } else {
+                $error = $this->mysqli->errno . ' ' . $this->mysqli->error;
+                echo $error; // 1054 Unknown column 'foo' in 'field list'
+            }
         }
 
         function getPollSlots($id) {
@@ -79,30 +111,30 @@
             return $data;
         }
 
-        function endPoll($id) {
-            $query = "UPDATE pmc_voter.poll SET active=2 WHERE poll_id = ?";
-
+        function updatePollSlot($id, $url) {
+            $query = "UPDATE pmc_voter.poll_slots SET `url`=? WHERE slots_id = ?";
 
             if($stmt = $this->mysqli->prepare($query)) { // assuming $mysqli is the connection
-                $stmt->bind_param('i', $id);
+                $stmt->bind_param('si', $url, $id);
                 $stmt->execute();
                 // any additional code you need would go here.
             } else {
                 $error = $this->mysqli->errno . ' ' . $this->mysqli->error;
                 echo $error; // 1054 Unknown column 'foo' in 'field list'
             }
-            
         }
 
-        function getPollByKey($pollKey) {
-            $query = "SELECT * FROM pmc_voter.poll as p WHERE p.poll_key = ?";
+        function updatePollSlotTotal($id, $slots) {
+            $query = "UPDATE pmc_voter.poll SET `slots`=? WHERE poll_id = ?";
 
-            $stmt = $this->mysqli->prepare($query); 
-            $stmt->bind_param("s", $pollKey);
-            $stmt->execute();
-            $result = $stmt->get_result(); // get the mysqli result
-            $data = $result->fetch_all(MYSQLI_ASSOC);
-            return $data[0];
+            if($stmt = $this->mysqli->prepare($query)) { // assuming $mysqli is the connection
+                $stmt->bind_param('ii', $slots, $id);
+                $stmt->execute();
+                // any additional code you need would go here.
+            } else {
+                $error = $this->mysqli->errno . ' ' . $this->mysqli->error;
+                echo $error; // 1054 Unknown column 'foo' in 'field list'
+            }
         }
 
         #########
