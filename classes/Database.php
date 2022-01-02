@@ -60,6 +60,25 @@
             $stmt->execute();
         }
 
+        function insertToPollSlot($id, $url) {
+            $query = "INSERT INTO `poll_slots`(`poll`, `url`) VALUES (?, ?)";
+
+            $stmt = $this->mysqli->prepare($query); 
+            $stmt->bind_param("is", $id, $url);
+            $stmt->execute();
+        }
+
+        function getPollSlots($id) {
+            $query = "SELECT * FROM pmc_voter.poll_slots as ps WHERE ps.poll = ?";
+
+            $stmt = $this->mysqli->prepare($query); 
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result(); // get the mysqli result
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+            return $data;
+        }
+
         function endPoll($id) {
             $query = "UPDATE pmc_voter.poll SET active=2 WHERE poll_id = ?";
 
@@ -73,6 +92,17 @@
                 echo $error; // 1054 Unknown column 'foo' in 'field list'
             }
             
+        }
+
+        function getPollByKey($pollKey) {
+            $query = "SELECT * FROM pmc_voter.poll as p WHERE p.poll_key = ?";
+
+            $stmt = $this->mysqli->prepare($query); 
+            $stmt->bind_param("s", $pollKey);
+            $stmt->execute();
+            $result = $stmt->get_result(); // get the mysqli result
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+            return $data[0];
         }
 
         #########
@@ -100,39 +130,6 @@
             return $data;
         }
 
-        #########
-        # Votes
-        #########
-        function recordVote($skinID, $ip, $poll) {
-            $query = "INSERT INTO pmc_voter.vote(skin, ip, poll) VALUES (?, ?, ?)";
-
-            $stmt = $this->mysqli->prepare($query); 
-            $stmt->bind_param("isi", $skinID, $ip, $poll);
-            $stmt->execute();
-        }
-
-        function getVotes($skinID) {
-            $query = "SELECT COUNT(*) as num_votes FROM pmc_voter.vote as v WHERE v.skin = ?";
-
-            $stmt = $this->mysqli->prepare($query); 
-            $stmt->bind_param("i", $skinID);
-            $stmt->execute();
-            $result = $stmt->get_result(); // get the mysqli result
-            $data = $result->fetch_all(MYSQLI_ASSOC);
-            return $data[0];
-        }
-
-        function getPollByKey($pollKey) {
-            $query = "SELECT * FROM pmc_voter.poll as p WHERE p.poll_key = ?";
-
-            $stmt = $this->mysqli->prepare($query); 
-            $stmt->bind_param("s", $pollKey);
-            $stmt->execute();
-            $result = $stmt->get_result(); // get the mysqli result
-            $data = $result->fetch_all(MYSQLI_ASSOC);
-            return $data[0];
-        }
-
         function insertSkin($path, $author, $title) {
             $query = "INSERT INTO pmc_voter.skin(path, author, name) VALUES (?, ?, ?)";
 
@@ -150,12 +147,46 @@
             return $data[0]['skin_id'];
         }
 
+        //
+        // Link skin to poll
+        // Adds a skin to belong to a poll
+        //
         function linkSkinToPoll($poll, $skinID) {
             $query = "INSERT INTO pmc_voter.skin_poll(`poll`, `skin`) VALUES (?, ?)";
 
             $stmt = $this->mysqli->prepare($query); 
             $stmt->bind_param("ii", $poll, $skinID);
             $stmt->execute();
+        }
+
+        #########
+        # Votes
+        #########
+        //
+        // Record vote
+        // Logs vote for skin with IP
+        //
+        function recordVote($skinID, $ip, $poll) {
+            $query = "INSERT INTO pmc_voter.vote(skin, ip, poll) VALUES (?, ?, ?)";
+
+            $stmt = $this->mysqli->prepare($query); 
+            $stmt->bind_param("isi", $skinID, $ip, $poll);
+            $stmt->execute();
+        }
+
+        //
+        // Get Votes
+        // Get num_votes based on skin
+        //
+        function getVotes($skinID) {
+            $query = "SELECT COUNT(*) as num_votes FROM pmc_voter.vote as v WHERE v.skin = ?";
+
+            $stmt = $this->mysqli->prepare($query); 
+            $stmt->bind_param("i", $skinID);
+            $stmt->execute();
+            $result = $stmt->get_result(); // get the mysqli result
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+            return $data[0];
         }
     }
 ?>
