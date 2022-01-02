@@ -1,13 +1,66 @@
 <?php
-// error_reporting(E_ALL);
-//     ini_set('display_errors', 1);
-    $username = $_REQUEST['inputUsername'];
-    $skinName = $_REQUEST['inputSkinName'];
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    $usernameURL = $_REQUEST['inputUsername'];
+    $skinNameURL = $_REQUEST['inputSkinName'];
     if (isset($_REQUEST['inputPollKeyCreate'])) {
         $createPoll = true;
     } else {
         $createPoll = false;
     }
+
+    /****************/
+    // Get username
+    /****************/
+    $context = stream_context_create(
+        array(
+            "http" => array(
+                "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+            )
+        )
+    );
+    $usernamePage = file_get_contents($usernameURL, false, $context);
+    $re = '/<div.id="member-title-primary">.<a.*><h1>(.*)<\/h1><\/a>/ms';
+    preg_match_all($re, $usernamePage, $matches);
+
+    // Print the entire match result
+    $username = $matches[1][0];
+
+    /****************/
+    // Get skin name
+    /****************/
+    $context = stream_context_create(
+        array(
+            "http" => array(
+                "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+            )
+        )
+    );
+    $skinPage = file_get_contents($skinNameURL, false, $context);
+    $re = '/<a\nhref=".member.zitzabis." title="(.+)" class="alt pusername.+">.+<.a><br.>/';
+    preg_match($re, $skinPage, $matches);
+
+    // Print the entire match result
+    $skinUsername = $matches[1];
+
+    $re = '/<div\nid="resource-title-text"><h1>(.+)<\/h1>/';
+    preg_match($re, $skinPage, $matches);
+
+    // Print the entire match result
+    $skinName = $matches[1];
+
+    if ($skinUsername != $username) {
+        echo "The skin's author does not match the profile you provided.";
+        echo "<br>Profile: " . $_REQUEST['inputUsername'];
+        echo "<br>Skin: " . $_REQUEST['inputSkinName'];
+
+        echo "<br><br>Press the back button to modify the links you provided.";
+        exit();
+    }
+
+    /****************/
+    // Image Handling
+    /****************/
     $target_dir = "../img/";
     $target_file = $target_dir . basename($_FILES["skinFile"]["name"]);
     $uploadOk = 1;
@@ -44,7 +97,7 @@
     
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        echo "Your file was not uploaded.";
         exit();
     // if everything is ok, try to upload file
     } else {
@@ -56,7 +109,8 @@
         }
     }
 
-    include_once("../scripts/dbStartup.php");
+    include_once("../classes/Database.php");
+    $db = new Database("localhost", "pbl", "vksqaPJoUpfEzBY2");
 
     if ( isset($_REQUEST['inputPollKeyCreate']) ) {
         if ( $_REQUEST['inputPollKey'] != '' ) {
@@ -74,7 +128,14 @@
         $db->createPoll($pollKey);
     }
     else {
-        $pollKey = $_REQUEST['inputPollKey'];
+        if ( isset($_REQUEST['inputPollKey']) && $_REQUEST['inputPollKey'] != '' ) {
+            $pollKey = $_REQUEST['inputPollKey'];
+        }
+        else {
+            echo "You must define the poll you want to enter, or select the option to create a poll.";
+            echo "<br><br>Press the back button to add a poll key or select the option to create a poll.";
+            exit();
+        }
     }
 
     $poll = $db->getPollByKey($pollKey);
