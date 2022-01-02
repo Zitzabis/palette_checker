@@ -119,13 +119,13 @@ Ends in:
 <form action="api/slotUpdate.php" method="post" enctype="multipart/form-data">
     <div class="row border" style="margin: 1rem">
         <h3>Slots</h3>
-        <div class="col-4" style="margin-top: 5rem">
+        <div class="col-4">
             <div class="mb-3">
                 <label for="pollSlots" class="form-label">Available slots (# of possible entries to the poll)</label>
                 <input type="text" class="form-control" id="pollSlots" name="pollSlots" value="<?php echo $poll['slots']; ?>">
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-8" style="border-left: 4px dotted black;">
             <?php
                 $pollSlots = $db->getPollSlots($poll['poll_id']);
                 echo '<input type="hidden" name="poll" value="' . $poll['poll_id'] . '">';
