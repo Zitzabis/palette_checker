@@ -141,7 +141,7 @@
     $poll = $db->getPollByKey($pollKey);
 
     $skinID = $db->insertSkin(
-        $target_dir . $poll['poll_id'] . ".png",
+        $target_dir . $pollKey . "_" . $username .".png",
         $username,
         $skinName
     );
@@ -151,7 +151,7 @@
     $pollID = $poll['poll_id'];
     $p = ((int)$pollID * 42) / 32;
 
-    rename($target_file, $target_dir . $pollID . ".png");
+    rename($target_file, $target_dir . $pollKey . "_" . $username .".png");
 
     if (isset($randomString)) {
         echo "<h1>Poll Key: ";
