@@ -77,6 +77,7 @@ Ends in:
 
 <form action="api/submitSkin.php" method="post" enctype="multipart/form-data">
     <div class="row border" style="margin: 1rem">
+        <h3>Info</h3>
         <div class="col">
             <div class="mb-3">
                 <label for="startDate" class="form-label">Start Date</label>
