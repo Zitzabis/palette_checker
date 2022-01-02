@@ -51,6 +51,10 @@
                                                     } catch (_) {
                                                         document.getElementById("inputUsername").value = ""; 
                                                     }
+
+                                                    if (document.getElementById("inputUsername").value.toLowerCase().indexOf("planetminecraft.com") === -1) {
+                                                        document.getElementById("inputUsername").value = "";
+                                                    }
                                                 }
                                             </script>
                                         </div>
@@ -66,6 +70,10 @@
                                                         url = new URL(url);
                                                     } catch (_) {
                                                         document.getElementById("inputSkinName").value = ""; 
+                                                    }
+
+                                                    if (document.getElementById("inputSkinName").value.toLowerCase().indexOf("planetminecraft.com") === -1) {
+                                                        document.getElementById("inputSkinName").value = "";
                                                     }
                                                 }
                                             </script>
