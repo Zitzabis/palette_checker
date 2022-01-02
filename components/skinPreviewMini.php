@@ -2,7 +2,7 @@
 <script>
     const configurations<?php echo $skin['skin_id']; ?> = [
         {
-            skin: "<?php echo "img/" .  $skin['skin_id'] . ".png"; ?>",
+            skin: "<?php echo "img/" .  $pollKey . "_" . $username. ".png"; ?>",
             cape: null
         }
     ];

@@ -58,7 +58,7 @@ if (session_id() == ''){
                                                 <br>
                                           
                                                 <div>
-                                                    <?php include('components/skinPreviewMini.php'); ?>
+                                                    <?php $username = $skin['author']; $pollKey = $pollDB['poll_key']; include('components/skinPreviewMini.php'); ?>
                                                     <!-- <iframe id="3dpreview_mini" src="<?php echo "3dpreview_mini/index.php?img=" .  $skin['skin_id']; ?>" width="300px" height="300px"></iframe> -->
                                                 </div>
                                               
@@ -199,7 +199,7 @@ if (session_id() == ''){
                                                         <br>
                                                 
                                                         <div>
-                                                            <?php include('components/skinPreviewMini.php'); ?>
+                                                            <?php $username = $skin['author']; $pollKey = $pollDB['poll_key']; include('components/skinPreviewMini.php'); ?>
                                                             <!-- <iframe id="3dpreview_mini" src="<?php echo "3dpreview_mini/index.php?img=" .  $skin['skin_id']; ?>" width="300px" height="300px"></iframe> -->
                                                         </div>
                                                     
@@ -240,6 +240,8 @@ if (session_id() == ''){
                             }
 
                             if (isset($_REQUEST['prev'])) {
+                                $skin = $db->getSkin($_REQUEST['prev']);
+                                $username = $skin['author']; $pollKey = $pollDB['poll_key'];
                                 include_once('components/skinPreviewFull.php');
                             }
                         ?>

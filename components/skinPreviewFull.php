@@ -136,7 +136,7 @@
             }
         }
         await Promise.all([
-            skinViewerFull.loadSkin("<?php echo "img/" .  $_REQUEST['prev'] . ".png"; ?>")
+            skinViewerFull.loadSkin("<?php echo "img/" .  $pollKey . "_" . $username. ".png"; ?>")
         ]);
         skinViewerFull.render();
 
