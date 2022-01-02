@@ -75,88 +75,80 @@ Ends in:
 <span id="timer-secs"></span>
 </h5>
 
+<form action="api/submitSkin.php" method="post" enctype="multipart/form-data">
+    <div class="row border" style="margin: 1rem">
+        <div class="col">
+            <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <?php
+                    $date = new DateTime($db->getPoll($poll['poll_id'])['start_date']);
+                ?>
+                <input type="date" class="form-control" id="startDate" value="<?php echo $date->format('Y-m-d'); ?>">
+            </div>
+            <div class="mb-3">
+                <label for="startDate" class="form-label">End Date</label>
+                <?php
+                    $date = new DateTime($db->getPoll($poll['poll_id'])['end_date']);
+                ?>
+                <input type="date" class="form-control" id="startDate" value="<?php echo $date->format('Y-m-d'); ?>">
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="startDate" class="form-label">Status</label>
+                <select id="cars" name="cars" class="form-control">
+                    <option value="draft" <?php if ($poll['active'] == 0) {echo "selected";} ?>>Draft</option>
+                    <option value="active" <?php if ($poll['active'] == 1) {echo "selected";} ?>>Active</option>
+                    <option value="done" <?php if ($poll['active'] == 2) {echo "selected";} ?>>Done</option>
+                    <option value="deleted" <?php if ($poll['active'] == 3) {echo "selected";} ?>>Deleted</option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="pollKey" class="form-label">Poll Key</label>
+                <input type="text" class="form-control" id="pollKey" value="<?php echo $poll['poll_key']; ?>">
+            </div>
+        </div>
+        <h2 class="text-center">
+            <input style="margin-top:1rem;" class="btn btn-success" type="submit" value="Save">
+        </h2>
+    </div>
+</form>
 
-<div class="row border">
-    <div class="col">
-        <div class="mb-3">
-            <label for="startDate" class="form-label">Start Date</label>
+<form action="api/slotUpdate.php" method="post" enctype="multipart/form-data">
+    <div class="row border" style="margin: 1rem">
+        <h3>Slots</h3>
+        <div class="col-4" style="margin-top: 5rem">
+            <div class="mb-3">
+                <label for="pollSlots" class="form-label">Available slots (# of possible entries to the poll)</label>
+                <input type="text" class="form-control" id="pollSlots" name="pollSlots" value="<?php echo $poll['slots']; ?>">
+            </div>
+        </div>
+        <div class="col-8">
             <?php
-                $date = new DateTime($db->getPoll($poll['poll_id'])['start_date']);
-            ?>
-            <input type="date" class="form-control" id="startDate" value="<?php echo $date->format('Y-m-d'); ?>">
-        </div>
-        <div class="mb-3">
-            <label for="startDate" class="form-label">End Date</label>
-            <?php
-                $date = new DateTime($db->getPoll($poll['poll_id'])['end_date']);
-            ?>
-            <input type="date" class="form-control" id="startDate" value="<?php echo $date->format('Y-m-d'); ?>">
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label for="startDate" class="form-label">Status</label>
-            <select id="cars" name="cars" class="form-control">
-                <option value="draft" <?php if ($poll['active'] == 0) {echo "selected";} ?>>Draft</option>
-                <option value="active" <?php if ($poll['active'] == 1) {echo "selected";} ?>>Active</option>
-                <option value="done" <?php if ($poll['active'] == 2) {echo "selected";} ?>>Done</option>
-                <option value="deleted" <?php if ($poll['active'] == 3) {echo "selected";} ?>>Deleted</option>
-            </select>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label for="pollKey" class="form-label">Poll Key</label>
-            <input type="text" class="form-control" id="pollKey" value="<?php echo $poll['poll_key']; ?>">
-        </div>
-    </div>
-</div>
-<h2 class="text-center">
-        <a 
-            style="margin-top:1rem;"
-            href="api/submitVote.php?p=<?php echo $p; ?>&s=<?php echo $p; ?>" role="button"
-            class="btn btn-success"
-            id="<?php echo $skin['skin_id']; ?>"
-            name="<?php echo $skin['skin_id']; ?>"
-        >
-            Save
-        </a>
-    </h2>
-<div class="row border">
-    <h3>Slots</h3>
-    <div class="col-4" style="margin-top: 5rem">
-        <div class="mb-3">
-            <label for="pollSlots" class="form-label">Available slots (# of possible entries to the poll)</label>
-            <input type="text" class="form-control" id="pollSlots" value="<?php echo $poll['slots']; ?>">
-        </div>
-    </div>
-    <div class="col-8">
-        <?php
-            $pollSlots = $db->getPollSlots($poll['poll_id']);
-            for ($i=0; $i < $poll['slots']; $i++) {
-                echo "<h4>". ($i+1) ."</h4>";
-                if (isset($pollSlots[$i])) {
-                    echo '<input type="text" class="form-control" id="profileURL" name="profileURL" value="' . $pollSlots[$i]['url'] . '">';
+                $pollSlots = $db->getPollSlots($poll['poll_id']);
+                echo '<input type="hidden" name="poll" value="' . $poll['poll_id'] . '">';
+                for ($i=0; $i < $poll['slots']; $i++) {
+                    echo "<h4>". ($i+1) ."</h4>";
+                    if (isset($pollSlots[$i])) {
+                        echo '<input type="hidden" name="slotID' . $pollSlots[$i]['slots_id'] . '" value="' . $pollSlots[$i]['slots_id'] . '">';
+                        echo '<input type="text" class="form-control" id="profileURLi" name="profileURLi' . $pollSlots[$i]['slots_id'] . '" value="' . $pollSlots[$i]['url'] . '">';
+                    }
+                    else {
+                        echo '<input type="text" class="form-control" id="profileURL" name="profileURLNew' . $i . '" value="">';
+                    }
                 }
-                else {
-                    echo '<input type="text" class="form-control" id="profileURL" name="profileURL" value="">';
-                }
-            }
-        ?>
+            ?>
+        </div>
+        <h2 class="text-center">
+            <input style="margin-top:1rem;" class="btn btn-success" type="submit" value="Save">
+        </h2>
     </div>
-    <h2 class="text-center">
-        <a 
-            style="margin-top:1rem;"
-            href="api/submitVote.php?p=<?php echo $p; ?>&s=<?php echo $p; ?>" role="button"
-            class="btn btn-success"
-            id="<?php echo $skin['skin_id']; ?>"
-            name="<?php echo $skin['skin_id']; ?>"
-        >
-            Save
-        </a>
-    </h2>
-</div>
+</form>
+
 <hr>
+
 <div class="row">
     <h3>Submitted Skins</h3>
     <?php
